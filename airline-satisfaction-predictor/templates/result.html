@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prediction Result | Airline Passenger Satisfaction Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Prediction Result</h1>
+      <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Form</a>
+    </header>
+
+    <div class="result-card">
+      <div class="result-header {{ 'satisfied' if prediction == 'Satisfied' else 'dissatisfied' }}">
+        <h2>
+          <i class="fas fa-{{ 'smile' if prediction == 'Satisfied' else 'frown' }}"></i>
+          {{ prediction }}
+        </h2>
+      </div>
+
+      <div class="probability-meter">
+        <div class="meter-labels">
+          <span>Neutral/Dissatisfied ({{ dissatisfaction_prob }}%)</span>
+          <span>Satisfied ({{ satisfaction_prob }}%)</span>
+        </div>
+        <div class="meter">
+          <div class="progress" style="width: 440"></div>
+        </div>
+      </div>
+
+      <div class="details-section">
+        <h3>Key Factors</h3>
+        <div class="factors">
+          <div class="factor positive">
+            <span>Top Positive Factors</span>
+            <ul>
+              <li>Seat Comfort (High Rating)</li>
+              <li>On-board Service (High Rating)</li>
+              <li>Short Arrival Delay</li>
+            </ul>
+          </div>
+          <div class="factor negative">
+            <span>Top Negative Factors</span>
+            <ul>
+              <li>Inflight WiFi (Low Rating)</li>
+              <li>Departure Delay (Long)</li>
+              <li>Food & Drink (Low Rating)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-summary">
+        <h3>Your Input Summary</h3>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span>Gender</span>
+            <strong>{{ input_data['Gender'] }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Customer Type</span>
+            <strong>{{ input_data['Customer Type'] }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Age</span>
+            <strong>{{ input_data['Age'] }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Travel Type</span>
+            <strong>{{ input_data['Type of Travel'] }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Class</span>
+            <strong>{{ input_data['Class'] }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Flight Distance</span>
+            <strong>{{ input_data['Flight Distance'] }} miles</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a href="/" class="btn">
+          <i class="fas fa-redo"></i> Make Another Prediction
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

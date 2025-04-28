@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Passenger Satisfaction Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Airline Passenger Satisfaction Predictor</h1>
+            <p>Predict passenger satisfaction based on flight experience</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('single')">Single Prediction</button>
+            <!-- <button class="tab-btn" onclick="openTab('batch')">Batch Prediction</button> -->
+        </div>
+
+        <div id="single" class="tab-content active">
+            {% if error %}
+                <div class="alert error">
+                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                </div>
+            {% endif %}
+            
+            <form id="predictionForm" action="/predict" method="POST">
+                <div class="form-section">
+                    <h2>Passenger Information</h2>
+                    <div class="form-group">
+                        <label for="Gender">Gender</label>
+                        <select id="Gender" name="Gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Customer Type">Customer Type</label>
+                        <select id="Customer Type" name="Customer Type" required>
+                            <option value="">Select Customer Type</option>
+                            <option value="Loyal Customer">Loyal Customer</option>
+                            <option value="disloyal Customer">disloyal Customer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Age">Age</label>
+                        <input type="number" id="Age" name="Age" min="1" max="120" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Type of Travel">Type of Travel</label>
+                        <select id="Type of Travel" name="Type of Travel" required>
+                            <option value="">Select Travel Type</option>
+                            <option value="Business travel">Business travel</option>
+                            <option value="Personal Travel">Personal Travel</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Class">Class</label>
+                        <select id="Class" name="Class" required>
+                            <option value="">Select Class</option>
+                            <option value="Eco">Economy</option>
+                            <option value="Eco Plus">Economy Plus</option>
+                            <option value="Business">Business</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Flight Details</h2>
+                    <div class="form-group">
+                        <label for="Flight Distance">Flight Distance (miles)</label>
+                        <input type="number" id="Flight Distance" name="Flight Distance" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Departure Delay in Minutes">Departure Delay (minutes)</label>
+                        <input type="number" id="Departure Delay in Minutes" name="Departure Delay in Minutes" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Arrival Delay in Minutes">Arrival Delay (minutes)</label>
+                        <input type="number" id="Arrival Delay in Minutes" name="Arrival Delay in Minutes" min="0" required>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Service Ratings (1-5)</h2>
+                    <div class="rating-grid">
+                        <div class="form-group">
+                            <label for="Inflight wifi service">Inflight WiFi</label>
+                            <input type="number" id="Inflight wifi service" name="Inflight wifi service" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Departure/Arrival time convenient">Departure/Arrival Time</label>
+                            <input type="number" id="Departure/Arrival time convenient" name="Departure/Arrival time convenient" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Ease of Online booking">Online Booking</label>
+                            <input type="number" id="Ease of Online booking" name="Ease of Online booking" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Gate location">Gate Location</label>
+                            <input type="number" id="Gate location" name="Gate location" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Food and drink">Food & Drink</label>
+                            <input type="number" id="Food and drink" name="Food and drink" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Online boarding">Online Boarding</label>
+                            <input type="number" id="Online boarding" name="Online boarding" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Seat comfort">Seat Comfort</label>
+                            <input type="number" id="Seat comfort" name="Seat comfort" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Inflight entertainment">Inflight Entertainment</label>
+                            <input type="number" id="Inflight entertainment" name="Inflight entertainment" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="On-board service">On-board Service</label>
+                            <input type="number" id="On-board service" name="On-board service" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Leg room service">Leg Room</label>
+                            <input type="number" id="Leg room service" name="Leg room service" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Baggage handling">Baggage Handling</label>
+                            <input type="number" id="Baggage handling" name="Baggage handling" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Checkin service">Check-in Service</label>
+                            <input type="number" id="Checkin service" name="Checkin service" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Inflight service">Inflight Service</label>
+                            <input type="number" id="Inflight service" name="Inflight service" min="1" max="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Cleanliness">Cleanliness</label>
+                            <input type="number" id="Cleanliness" name="Cleanliness" min="1" max="5" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">Predict Satisfaction</button>
+            </form>
+        </div>
+
+        <div id="batch" class="tab-content">
+            {% if error %}
+                <div class="alert error">
+                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                </div>
+            {% endif %}
+            
+            <form id="batchForm" action="/predict_batch" method="POST" enctype="multipart/form-data">
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Upload Excel File</h3>
+                    <p>Drag & drop your Excel file here or click to browse</p>
+                    <input type="file" id="fileInput" name="file" accept=".xlsx,.xls" required>
+                    <label for="fileInput" class="btn">Select File</label>
+                    <div id="fileName"></div>
+                </div>
+                
+                <div class="download-template">
+                    <a href="/static/sample_template.xlsx" download class="btn outline">
+                        <i class="fas fa-download"></i> Download Sample Template
+                    </a>
+                </div>
+                
+                <button type="submit" class="btn" id="batchSubmit" disabled>Process File</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
