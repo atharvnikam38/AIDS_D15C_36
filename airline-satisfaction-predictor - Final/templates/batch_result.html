@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Results | Airline Passenger Satisfaction Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Batch Prediction Results</h1>
+            <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Form</a>
+        </header>
+
+        <div class="batch-summary">
+            <div class="summary-card">
+                <i class="fas fa-file-excel"></i>
+                <h3>{{ total_records }} Records Processed</h3>
+                <p>{{ satisfied_count }} passengers predicted to be satisfied</p>
+            </div>
+            
+            {% if send_file %}
+            <a href="/download_results" class="btn download-btn">
+                <i class="fas fa-download"></i> Download Full Results
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="results-table">
+            <h3>Sample Predictions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Gender</th>
+                        <th>Customer Type</th>
+                        <th>Age</th>
+                        <th>Type of Travel</th>
+                        <th>Class</th>
+                        <th>Prediction</th>
+                        <th>Satisfaction Prob.</th>
+                        <th>Dissatisfaction Prob.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in sample_results %}
+                    <tr>
+                        <td>{{ result['Gender'] }}</td>
+                        <td>{{ result['Customer Type'] }}</td>
+                        <td>{{ result['Age'] }}</td>
+                        <td>{{ result['Type of Travel'] }}</td>
+                        <td>{{ result['Class'] }}</td>
+                        <td class="{{ 'pred-satisfied' if result['Prediction'] == 'Satisfied' else 'pred-dissatisfied' }}">
+                            {{ result['Prediction'] }}
+                        </td>
+                        <td>{{ result['Satisfaction Probability'] }}%</td>
+                        <td>{{ result['Dissatisfaction Probability'] }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="stats-section">
+            <div class="stat-card">
+                <h3>Satisfaction Rate</h3>
+                <div class="stat-value">{{ satisfaction_rate }}%</div>
+                <div class="stat-progress">
+                    <div class="progress" style="width: {{ satisfaction_rate }}%"></div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Top Satisfying Factor</h3>
+                <div class="stat-value">{{ top_factor.name }}</div>
+                <div class="stat-detail">{{ top_factor.rating }}/5 average rating</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Top Dissatisfying Factor</h3>
+                <div class="stat-value">{{ bottom_factor.name }}</div>
+                <div class="stat-detail">{{ bottom_factor.rating }}/5 average rating</div>
+            </div>
+        </div>
+
+        <div class="demographic-insights">
+            <h3>Satisfaction by Demographics</h3>
+            
+            <div class="insight-cards">
+                <div class="insight-card">
+                    <h4>By Gender</h4>
+                    <ul>
+                        {% for gender, rate in demographics.gender.items() %}
+                        <li>{{ gender }}: {{ rate }}% satisfied</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="insight-card">
+                    <h4>By Customer Type</h4>
+                    <ul>
+                        {% for type, rate in demographics.customer_type.items() %}
+                        <li>{{ type }}: {{ rate }}% satisfied</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="insight-card">
+                    <h4>By Class</h4>
+                    <ul>
+                        {% for class, rate in demographics.class.items() %}
+                        <li>{{ class }}: {{ rate }}% satisfied</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="insight-card">
+                    <h4>By Travel Type</h4>
+                    <ul>
+                        {% for type, rate in demographics.travel_type.items() %}
+                        <li>{{ type }}: {{ rate }}% satisfied</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="/" class="btn">
+                <i class="fas fa-redo"></i> Process Another File
+            </a>
+        </div>
+    </div>
+</body>
+</html>
